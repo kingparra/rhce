@@ -1,0 +1,20 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      path: ansible.cfg
+    inventory:
+      entries:
+        - inventory.ini
+    playbook:
+      path: main.yml
+  color:
+    enable: False
+  execution-environment:
+    pull:
+      policy: never
+  logging:
+    level: debug
+    append: False
+  mode: stdout
+
