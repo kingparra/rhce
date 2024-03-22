@@ -5,7 +5,7 @@ ansible-navigator:
       path: ansible.cfg
     inventory:
       entries:
-        - inventory.ini
+        - inventories/main.ini
     playbook:
       path: main.yml
   color:
