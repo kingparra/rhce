@@ -17,4 +17,9 @@ ansible-navigator:
     level: debug
     append: False
   mode: stdout
+  playbook-artifact:
+    enable: False
+  logging:
+    level: critical
+    file: ~/.ansible-navigator.log
 
