@@ -9,7 +9,8 @@ ansible-navigator:
     playbook:
       path: main.yml
   color:
-    enable: False
+    osc4: False
+    #enable: False
   execution-environment:
     pull:
       policy: never

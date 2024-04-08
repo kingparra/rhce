@@ -1,0 +1,39 @@
+---
+# tasks file for roles/nginx_welcome
+
+- name: Install dnf-utils
+  ansible.builtin.dnf:
+    name: yum-utils
+    state: present
+    
+
+- name: Add repo file
+  ansible.builtin.copy:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/nginx.repo
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Install nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+- name: Render html index and place in public www
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+
+- name: Enable and start nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Allow HTTP ingress with firewalld
+  ansible.posix.firewalld:
+    service: http
+    permanent: true
+    immediate: true
+    state: enabled

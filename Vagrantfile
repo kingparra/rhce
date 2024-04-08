@@ -26,11 +26,11 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # Provision with ansible after all VMs have been created.
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provision/main.yml"
-    ansible.inventory_path = "provision/inventories/main.ini"
-    ansible.limit = "all"
-  end
+  # # Provision with ansible after all VMs have been created.
+  # config.vm.provision "ansible" do |ansible|
+  #   ansible.playbook = "provision/main.yml"
+  #   ansible.inventory_path = "provision/inventories/main.ini"
+  #   ansible.limit = "all"
+  # end
 
 end

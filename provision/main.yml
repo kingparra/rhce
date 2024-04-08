@@ -1,0 +1,21 @@
+---
+- hosts: 192.168.56.2 # controller
+  become: true
+  tasks:
+
+    - name: Set up controller with user and tools
+      include_tasks: tasks/controller.yml
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Run sanity check to see if nodes are up and the playbook executes.
+      include_tasks: tasks/sanity_check.yml
+
+- hosts: app
+  become: true
+  tasks:
+
+    - name: Set up nginx
+      include_tasks: tasks/webservers.yml

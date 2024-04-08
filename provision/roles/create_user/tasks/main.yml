@@ -1,0 +1,22 @@
+---
+# tasks file for roles/create_user
+- name: "Create user {{ user }}"
+  user:
+    name: "{{ user }}"
+    password: "{{ password | password_hash('sha512') }}"
+
+# - name: "Set password for {{ user }} from vault"
+#   shell: "echo {{ password }} | passwd --stdin {{ user }}"
+
+# custom facts are store in ansible_facts.ansible_local
+
+- name: Test loop syntax
+  debug:
+    msg: "User {{ item.name }} has primary group {{ item.group }}"
+  loop:
+    - name: chris
+      group: wheel
+    - name: jason
+      group: web
+    - name: aletheia
+      group: happiness

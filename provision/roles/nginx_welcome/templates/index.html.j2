@@ -1,0 +1,7 @@
+<!-- index.html -->
+<html>
+  <h1>
+    Welcome to {{ ansible_facts.hostname }} 
+    on {{ ansible_facts.eth0.ipv4.address }}!
+  </h1>
+</html>

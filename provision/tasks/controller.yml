@@ -1,0 +1,16 @@
+---
+- name: Create ansible user
+  include_role:
+    name: create_user
+  vars:
+    user: ansible
+
+- name: Grant wheel nopasswd sudoers access
+  community.general.sudoers:
+    # Don't do priv escalation like this in the real world, this is for labs only.
+    # format of a suders entry: <username> <host> = <command>
+    host: ALL
+    commands: ALL
+    group: wheel
+    nopassword: true
+    name: wheel-nopasswd

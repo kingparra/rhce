@@ -1,0 +1,4 @@
+---
+- name: Execute nginx role 
+  include_role:
+    name: nginx_welcome

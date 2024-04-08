@@ -1,4 +1,5 @@
 **/.vagrant/
 .vagrant
 **/collections
+**/ansible-navigator.log
 
