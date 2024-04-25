@@ -1,0 +1,54 @@
+---
+- name: Experiment with LVM
+  hosts: localhost
+  become: true
+  tasks:
+
+    - name: Install parted and lvm2
+      dnf:
+        state: present
+        name:
+          - lvm2
+          - parted
+      when: ansible_facts.distribution != 'Fedora'
+
+    - name: Create empty block device
+      shell: truncate --size 40G block-device
+
+    - name: Create four equally sized partitions on block-device
+      parted:
+        device: block-device
+        state: present
+        number: "{{ item.num }}"
+        part_start: "{{ item.start }}"
+        part_end: "{{ item.end }}"
+      loop:
+        - {num: 1, start: 1MiB, end: 25%}
+        - {num: 2, start: 10GiB, end: 50%}
+        - {num: 3, start: 20GiB, end: 75%}
+        - {num: 4, start: 30GiB, end: 100%}
+
+    - name: Make OS aware of partitions on block-device
+      shell: losetup --find --nooverlap --partscan block-device
+    
+    - name: Create tank1 VG
+      lvg:
+        vg: tank1
+        pvs:
+          - /dev/loop0p1
+          - /dev/loop0p2
+
+    - name: Create tank2 VG
+      lvg:
+        vg: tank2
+        pvs:
+          - /dev/loop0p3
+          - /dev/loop0p4
+
+    - name: Create LV on top of tank1
+      lvol:
+        lv: slice1
+        size: "+50%VG"
+        vg: tank1
+
+
